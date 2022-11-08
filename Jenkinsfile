@@ -10,16 +10,7 @@ pipeline {
     //     GOPATH = "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"
     // }
     stages {
-        stage('preparation') {
-           steps {
-               withKubeConfig([credentialsId: 'kubeconfig']) {
-                sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
-                sh 'chmod u+x ./kubectl'
-                sh './kubectl get nodes --insecure-skip-tls-verify'
-               }
-           }
-        }
-        stage("build") {
+        stage("Build") {
             steps {
                 echo 'BUILD EXECUTION STARTED'
                 sh 'go mod download'
@@ -27,7 +18,7 @@ pipeline {
                 sh 'docker build . -t katuang/golang-service'
             }
         }
-        stage('deliver') {
+        stage('Publish') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]) {
                 sh "docker login -u ${env.dockerhubUser} -p ${env.dockerhubPassword}"
@@ -38,7 +29,9 @@ pipeline {
         stage('Deploy') {
            steps {
                withKubeConfig([credentialsId: 'kubeconfig']) {
-                sh 'kubectl get pods'
+                sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
+                sh 'chmod u+x ./kubectl'
+                sh './kubectl apply -f apps.yaml --insecure-skip-tls-verify'
                }
            }
         }

@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pintu-go-svc
+spec:
+  type: NodePort
+  selector:
+    apps: golang
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30007
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pintu-go
+  labels:
+    apps: golang
+spec:
+  containers:
+  - name: pintu-go
+    image: katuang/golang-service
+    ports:
+    - containerPort: 8080
