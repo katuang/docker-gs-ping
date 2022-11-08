@@ -1,14 +1,10 @@
 pipeline {
-    // install golang 1.14 on Jenkins node
+    
     agent any
     tools {
         go 'jenkins_golang'
     }
-    // environment {
-    //     GO114MODULE = 'on'
-    //     CGO_ENABLED = 0 
-    //     GOPATH = "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"
-    // }
+    
     stages {
         stage("Build") {
             steps {
