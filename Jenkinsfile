@@ -16,6 +16,7 @@ pipeline {
                 sh 'kubectl get nodes'
                }
            }
+        }
         stage("build") {
             steps {
                 echo 'BUILD EXECUTION STARTED'
@@ -38,6 +39,6 @@ pipeline {
                 sh 'kubectl get pods'
                }
            }
-       }
+        }
     }
 }
