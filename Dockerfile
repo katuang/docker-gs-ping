@@ -4,7 +4,7 @@ FROM alpine
 WORKDIR /app
 
 # Copy the source code. Note the slash at the end, as explained in
-COPY docker-gs-ping ./
+COPY docker-gs-ping /app
 
 # This is for documentation purposes only.
 # To actually open the port, runtime parameters
@@ -18,4 +18,4 @@ EXPOSE 8080
 #ENV HTTP_PORT=8081
 
 # Run
-CMD [ "docker-gs-ping" ]
+CMD [ "/app/docker-gs-ping" ]
