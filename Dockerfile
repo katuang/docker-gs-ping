@@ -4,7 +4,7 @@ FROM alpine
 WORKDIR /app
 
 # Copy the source code. Note the slash at the end, as explained in
-COPY docker-gs-ping /docker-gs-ping
+COPY docker-gs-ping .
 
 # This is for documentation purposes only.
 # To actually open the port, runtime parameters
