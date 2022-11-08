@@ -10,6 +10,12 @@ pipeline {
     //     GOPATH = "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"
     // }
     stages {
+        stage('preparation') {
+           steps {
+               withKubeConfig([credentialsId: 'kubeconfig']) {
+                sh 'kubectl get nodes'
+               }
+           }
         stage("build") {
             steps {
                 echo 'BUILD EXECUTION STARTED'
@@ -26,5 +32,12 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+           steps {
+               withKubeConfig([credentialsId: 'kubeconfig']) {
+                sh 'kubectl get pods'
+               }
+           }
+       }
     }
 }
