@@ -13,8 +13,6 @@ pipeline {
         stage("Build") {
             steps {
                 echo 'BUILD EXECUTION STARTED'
-                sh 'go mod download'
-                sh 'go build -o docker-gs-ping'
                 sh 'docker build . -t katuang/golang-service'
             }
         }
